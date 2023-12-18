@@ -19,6 +19,7 @@ exports.signup = async (req, res) => {
       password,
       // confirmPassword,
       accountType,
+      category
     } = req.body
     // Check if All Details are there or not
     if (
@@ -33,6 +34,7 @@ exports.signup = async (req, res) => {
         message: "All Fields are required",
       })
     }
+
     // Check if password and confirm password match
     // if (password !== confirmPassword) {
     //   return res.status(400).json({
@@ -82,17 +84,34 @@ exports.signup = async (req, res) => {
     //   about: null,
     //   contactNumber: null,
     // })
-    const user = await User.create({
-      name:name,
-      
-      email:email,
-      
-      password: hashedPassword,
-      accountType: accountType,
-      // approved: approved,
-      // additionalDetails: profileDetails._id,
-      // image: "",
-    })
+    if(accountType==="Vendor"){
+      const user = await User.create({
+        name:name,
+        
+        email:email,
+        
+        password: hashedPassword,
+        accountType: accountType,
+        category:category,
+        // approved: approved,
+        // additionalDetails: profileDetails._id,
+        // image: "",
+      })
+    }
+    else{
+      const user = await User.create({
+        name:name,
+        
+        email:email,
+        
+        password: hashedPassword,
+        accountType: accountType,
+        // approved: approved,
+        // additionalDetails: profileDetails._id,
+        // image: "",
+      })
+    }
+    
 
     return res.status(200).json({
       success: true,
